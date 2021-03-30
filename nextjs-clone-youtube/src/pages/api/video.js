@@ -18,6 +18,8 @@ handler.post(async (req, res) => {
     const { db } = await connectToDatabase();
     const collection = db.collection('videos');
 
+    
+
     await collection.insertOne({
       title,
       authorId: ObjectId(authorId),

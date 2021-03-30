@@ -3,6 +3,8 @@ import { Box, Grid } from '@material-ui/core';
 import Layout from 'src/components/Layout';
 import VideoCard from 'src/components/VideoCard';
 
+import {getVideos} from 'src/database/getVideos';
+
 
 function Home({ data }) {
   return (
@@ -21,7 +23,7 @@ function Home({ data }) {
 }
 
 export async function getStaticProps() {
-   const data = [
+   /* const data = [
      {
        id: 1,
        title: 'FEED DO USUÁRIO | Criando uma Rede Social com React.js e .NET Core #29',
@@ -66,9 +68,11 @@ export async function getStaticProps() {
       videoUrl: 'url',
       updatedAt: new Date(),
     },
-   ];
+   ]; */
 
- // const data = await getVideos();
+    
+
+const data = await getVideos();
 // const teste = data.json();
  //  console.log(teste);
   return {
