@@ -4,6 +4,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 
+
 dayjs.extend(relativeTime);
 
 const useStyles = makeStyles(() => ({
@@ -35,6 +36,7 @@ function VideoCard({ item }) {
         alt={item.title}
         src={item.thumb}
       />
+      
       <Box display="flex" mt={1}>
         <Box mr={1}>
           <Avatar alt={item.authorName} src={item.authorAvatar}>

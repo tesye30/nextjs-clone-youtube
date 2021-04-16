@@ -69,7 +69,7 @@ export async function getStaticProps() {
       updatedAt: new Date(),
     },
    ]; */
-
+  
     
 
 const data = await getVideos();
@@ -79,6 +79,7 @@ const data = await getVideos();
     props: {
       data: JSON.parse(JSON.stringify(data)),
     }, // will be passed to the page component as props
+    revalidate: 15,
   };
 }
 
