@@ -140,7 +140,7 @@ const NavBar = () => {
         {!session ? (
           <Box mx={4} my={2}>
             <Typography variant="body2">
-              Faça login para curtir vídeos, comentar e se inscrever.
+              Faça login para se divertir curtir vídeos, comentar e se inscrever.
             </Typography>
             <Box mt={2}>
               <Button
