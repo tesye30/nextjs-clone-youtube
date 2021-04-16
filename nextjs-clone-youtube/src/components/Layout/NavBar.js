@@ -1,4 +1,5 @@
-import { useRouter} from 'next/router'; 
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 import {
   makeStyles,
   Hidden,
@@ -14,16 +15,18 @@ import {
   Typography,
   Button,
 } from '@material-ui/core';
-
 import HomeIcon from '@material-ui/icons/Home';
 import Subscriptions from '@material-ui/icons/Subscriptions';
 import Whatshot from '@material-ui/icons/Whatshot';
 
-import VideoLibray from '@material-ui/icons/VideoLibrary';
+import VideoLibrary from '@material-ui/icons/VideoLibrary';
 import History from '@material-ui/icons/History';
-import { AccountCircle, Router } from '@material-ui/icons';
 
-const useStyles = makeStyles((theme) =>({
+import AccountCircle from '@material-ui/icons/AccountCircle';
+
+import { useSession } from 'next-auth/client';
+
+const useStyles = makeStyles((theme) => ({
   mobileDrawer: {
     width: 240,
   },
@@ -47,9 +50,10 @@ const useStyles = makeStyles((theme) =>({
     fontSize: 14,
   },
 }));
+
 const primaryMenu = [
-  { id: 1, label: 'Início', path: '/', icon: HomeIcon},
-  { id: 2, label: 'Em alta', path: '/trendding', icon: Whatshot},
+  { id: 1, label: 'Início', path: '/', icon: HomeIcon },
+  { id: 2, label: 'Em alta', path: '/trendding', icon: Whatshot },
   {
     id: 3,
     label: 'Inscrições',
@@ -58,20 +62,33 @@ const primaryMenu = [
   },
 ];
 
-const secondaryMenu = [
-  { id: 1, label: 'Biblioteca', icon: VideoLibray}, 
-  { id: 2, label: 'Histórico', icon: History}, 
+const secondaryManu = [
+  { id: 1, label: 'Biblioteca', icon: VideoLibrary },
+  { id: 2, label: 'Histórico', icon: History },
 ];
 
-function NavBar() {
+const NavBar = () => {
   const classe = useStyles();
   const router = useRouter();
+  const [session] = useSession();
+  const [subscriptions, setSubscriptions] = useState([
+    { id: 1, name: 'Canal 1' },
+    { id: 2, name: 'Canal 2' },
+    { id: 3, name: 'Canal 3' },
+    { id: 4, name: 'Canal 4' },
+    { id: 5, name: 'Canal 5' },
+    { id: 6, name: 'Canal 6' },
+    { id: 7, name: 'Canal 7' },
+    { id: 8, name: 'Canal 8' },
+  ]);
 
-  const isSelected = (item) => router.pathname === item.path;
+  const isSelected = (item) => {
+    return router.pathname === item.path;
+  };
 
   const content = (
     <Box height="100%" display="flex" flexDirection="column">
-         <List>
+      <List>
         {primaryMenu.map((item) => {
           const Icon = item.icon;
           return (
@@ -94,9 +111,9 @@ function NavBar() {
           );
         })}
       </List>
-      <Divider/>
+      <Divider />
       <List>
-        {secondaryMenu.map((item) => {
+        {secondaryManu.map((item) => {
           const Icon = item.icon;
           return (
             <ListItem
@@ -118,32 +135,68 @@ function NavBar() {
           );
         })}
       </List>
-      <Divider/>
-      <Box mx={4} my={4}>
-        <Typography variant="body2">
-          Faça login para curtir vídeos, comentar e se inscrever.
-        </Typography>
-        <Box mt={2}>
-          <Button variant="outlined" color="secondary" startIcon={<AccountCircle/>}>
-            Fazer login
-          </Button>
-        </Box>
+      <Divider />
+      <Box>
+        {!session ? (
+          <Box mx={4} my={2}>
+            <Typography variant="body2">
+              Faça login para curtur vídeos, comentar e se inscrever.
+            </Typography>
+            <Box mt={2}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                startIcon={<AccountCircle />}
+              >
+                Fazer login
+              </Button>
+            </Box>
+          </Box>
+        ) : (
+          <List
+            subheader={
+              <ListSubheader component="div" id="nested-list-subheader">
+                INSCRIÇÕES
+              </ListSubheader>
+            }
+          >
+            {subscriptions.map((item) => (
+              <ListItem
+                key={item.id}
+                button
+                classes={{ root: classe.listItem }}
+                selected={isSelected(item)}
+              >
+                <ListItemIcon>
+                  <Avatar className={classe.avatar}>H</Avatar>
+                </ListItemIcon>
+                <ListItemText
+                  classes={{
+                    primary: classe.listItemText,
+                  }}
+                  primary={item.name}
+                />
+              </ListItem>
+            ))}
+          </List>
+        )}
       </Box>
+      <Divider />
     </Box>
   );
 
   return (
-   <Hidden mdDown>
-     <Drawer
-      anchor="left"
-      classes={{ paper: classe.desktopDrawer}}
-      open
-      variant="persistent"
-     >
-       {content}
-     </Drawer>
-   </Hidden>
-  )
-}
+    <Hidden mdDown>
+      <Drawer
+        anchor="left"
+        classes={{ paper: classe.desktopDrawer }}
+        open
+        variant="persistent"
+      >
+        {content}
+      </Drawer>
+    </Hidden>
+  );
+};
 
 export default NavBar;

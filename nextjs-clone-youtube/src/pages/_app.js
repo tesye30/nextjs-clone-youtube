@@ -1,15 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Head from 'next/head';
-import { ThemeProvider } from '@material-ui/core/styles';
+import MyThemeProvide from 'src/components/MyThemeProvider';
+import { SettingsProvider } from 'src/contexts/SettingsContext';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import theme from '../theme';
-
+import { Provider } from 'next-auth/client';
 import { Router } from 'next/dist/client/router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-
-
 
 
 NProgress.configure({
@@ -43,20 +40,26 @@ export default function MyApp(props) {
     }
   }, []);
   return (
-     <>
-    <React.Fragment>
+    <>
       <Head>
         <title>My page</title>
-        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width"
+        />
       </Head>
-      <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        <Component {...pageProps} />
-      </ThemeProvider>
-     
-    </React.Fragment>
-    <style global jsx>
+      <Provider session={pageProps.session}>
+        
+      <SettingsProvider>
+          <MyThemeProvide>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Component {...pageProps} />
+          </MyThemeProvide>
+        </SettingsProvider>
+        
+      </Provider>
+      <style global jsx>
         {`
           #nprogress {
             position: relative;
@@ -68,11 +71,7 @@ export default function MyApp(props) {
           }
         `}
       </style>
-   </>
+    </>
   );
 }
 
-MyApp.propTypes = {
-  Component: PropTypes.elementType.isRequired,
-  pageProps: PropTypes.object.isRequired,
-};
