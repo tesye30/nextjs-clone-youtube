@@ -91,7 +91,7 @@ const TopBar = ({ className, ...rest }) => {
               alt="Logo"
               src={
                 settings.theme === THEMES.DARK
-                  ? 'https://www.youtube.com/about/static/svgs/icons/brand-resources/YouTube-logo-full_color_dark.svg?cache=bb9b9c6'
+                  ? '/branco.svg'
                   : '/new-youtube-logo.svg'
               }
             />

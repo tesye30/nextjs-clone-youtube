@@ -23,8 +23,8 @@ import VideoLibrary from '@material-ui/icons/VideoLibrary';
 import History from '@material-ui/icons/History';
 
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import { useSession, signIn, signOut } from 'next-auth/client';
 
-import { useSession } from 'next-auth/client';
 
 const useStyles = makeStyles((theme) => ({
   mobileDrawer: {
@@ -144,9 +144,11 @@ const NavBar = () => {
             </Typography>
             <Box mt={2}>
               <Button
-                variant="outlined"
-                color="secondary"
-                startIcon={<AccountCircle />}
+               color="secondary"
+               component="a"
+               variant="outlined"
+               startIcon={<AccountCircle />}
+               onClick={() => signIn('google')}
               >
                 Fazer login
               </Button>

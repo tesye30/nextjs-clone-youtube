@@ -51,14 +51,14 @@ const themesOptions = [
       },
       background: {
         default: '#282C34',
-        dark: '#1c2025',
+        dark: '#20242b',
         paper: '#282C34',
       },
       primary: {
-        main: '#8a85ff',
+        main: '#00cdd4',
       },
       secondary: {
-        main: '#8a85ff',
+        main: '#00cdd4',
       },
       text: {
         primary: '#e6e5e8',

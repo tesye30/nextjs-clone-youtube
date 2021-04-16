@@ -5,13 +5,13 @@ import Head from 'next/head';
 import TopBar from './TopBar';
 import NavBar from './NavBar';
 
-const useStyles = makeStyles((theme)=>({
+const useStyles = makeStyles((theme) => ({
   root: {
-    background: 'theme.palette.background.dark',
+    backgroundColor: theme.palette.background.dark,
     display: 'flex',
-    height:'100vh',
-    overflow:'hidden',
-    width:'100vw',
+    height: '100vh',
+    overflow: 'hidden',
+    width: '100vw',
   },
   wrapper: {
     display: 'flex',
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme)=>({
 }));
 
 function Layout({children, title}){
-  const classe = useStyles();
+  const classes = useStyles();
   return (
     <>
       <Head>
@@ -48,13 +48,13 @@ function Layout({children, title}){
       <meta charSet="utf-8"/>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
-  <div className={classe.root}>
+  <div className={classes.root}>
     <TopBar/>
     <NavBar/>
     <div>navbar</div> 
-    <div className={classe.wrapper}>
-      <div className={classe.contentContainer}>
-        <div className={classe.conent}>{children}</div>
+    <div className={classes.wrapper}>
+      <div className={classes.contentContainer}>
+        <div className={classes.conent}>{children}</div>
       </div>
       </div>  
   </div>
